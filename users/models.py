@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.timezone import now
+from phonenumber_field.modelfields import PhoneNumberField #Used for phone number validation
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
@@ -26,6 +27,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+# Create custom user model
 class CustomUser(AbstractBaseUser, PermissionsMixin): 
     #Custom user model
     ROLE_CHOICES = [
@@ -50,6 +52,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.username
+
+# Create profile model extending custom user model
+# -Stores extra user details without bloating CustomUser model
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(blank=True, null=True)
+    phone_number = PhoneNumberField(unique=True, null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profiles/', null=True, blank=True)
+    
+    def __str__(self):
+        return f'Profile of {self.user.username}'
+
     
     
     
