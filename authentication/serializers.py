@@ -4,9 +4,11 @@ from allauth.account import app_settings as allauth_settings
 # Module for sending email verification to user
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth import get_user_model
+from allauth.account.models import EmailAddress
 
 User = get_user_model()
 
+# User Registration serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
     # Include a custom field, password2 for validating the password
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -39,5 +41,31 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         
         return user
         
+# User login serializer
+class CustomLoginSerializer(serializers.Serializer):
+    # Define two fields to be used for user authentication
+    email = serializers.EmailField()
+    password = serializers.CharField(style={'input_type': 'password'})
+    
+    # Define validation logic
+    def validate(self, data):
+        # Retrieve email and password from input data
+        email = data.get('email')
+        password = data.get('password')
         
+        try:
+            user = EmailAddress.objects.get(email=email).user
+        except EmailAddress.DoesNotExist:
+            raise serializers.ValidationError('Email or password is invalid.')
+        if not user.is_active:
+            raise serializers.ValidationError('Account is not active.')
+        if not user.check_password(password):
+            raise serializers.ValidationError('Email or password is invalid.')
+        return {'user': user}
+        
+        
+    
+    
+    
+    
         
