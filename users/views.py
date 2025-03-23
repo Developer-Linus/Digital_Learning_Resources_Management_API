@@ -4,8 +4,13 @@ from rest_framework.views import APIView
 from .models import Profile
 from .serializers import ProfileSerializer
 
+from drf_spectacular.utils import extend_schema
+
 
 # Class-based view for retrieving user's profile
+@extend_schema(
+    responses={200: ProfileSerializer, 404: {'error': 'Profile not found.'}}
+)
 class ProfileView(APIView):
     def get(self, request):
         # Get's user profile
@@ -17,6 +22,10 @@ class ProfileView(APIView):
             return Response({'error' : 'Profile not found.'},status=status.HTTP_404_NOT_FOUND)
 
 # Class-based view for updating user's profile
+@extend_schema(
+    request=ProfileSerializer,
+    responses={200: ProfileSerializer, 400: {'error': 'Invalid request data'}, 404: {'error': 'Profile not found.'}}
+)
 class UpdateProfileView(APIView):
     def put(self, request):
         #Get user's profile
@@ -31,6 +40,9 @@ class UpdateProfileView(APIView):
             return Response({'errors':'Profile not found.'}, status=status.HTTP_200_OK)
 
 # Class-based view for deleting user's profile
+@extend_schema(
+    responses={200: {'message': 'Profile successfully deleted'}, 404: {'error': 'Profile not found.'}}
+)
 class DeleteProfileView(APIView):
     def delete(self, request):
         # Get user's profile

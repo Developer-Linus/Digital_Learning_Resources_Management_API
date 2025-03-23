@@ -12,10 +12,9 @@ User = get_user_model()
 class UserRegistrationSerializer(serializers.ModelSerializer):
     # Include a custom field, password2 for validating the password
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password2']
+        fields = ['email', 'password', 'password2']
         extra_kwargs = {
             'password': {'write_only': True},
         }
