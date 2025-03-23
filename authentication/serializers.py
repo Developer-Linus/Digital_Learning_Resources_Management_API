@@ -33,11 +33,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             username=validated_data['username'], 
             email=validated_data['email'], 
             password=validated_data['password'])
-        
+         #Send email confirmation to the user
         send_email_confirmation(self.context['request'], user)
         return user
-        #Send email confirmation to the user
-        send_email_confirmation(self.context['request'], user)
+       
         
         return user
         
