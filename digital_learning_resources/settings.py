@@ -35,18 +35,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'phonenumber_field',
     'authentication.apps.AuthenticationConfig',
+    'rest_framework.authtoken',
     # App for JWT authentication
     'rest_framework_simplejwt',
-    'django.contrib.sites', #django-auth depends on this
-    
-    # Adding django-allauth app
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount', # For social authentication
-    
-    # Adding dj-rest-auth apps
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
     
     #drf-spectacular app (collects all the API resources and serve it to Swagger UI)
     'drf_spectacular',
@@ -61,8 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #Middleware for django-allauth
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'digital_learning_resources.urls'
@@ -75,7 +64,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', #allauth needs this.
+                'django.template.context_processors.request', 
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -154,8 +143,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'TOKEN_MODEL': None,
+   
 }
 
 # JWT Configuration
@@ -173,14 +165,10 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
 }
 
-# Requirement for django-auth
-SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
-    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth authentication
 ]
-
 # Spectacular Settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Digital Learning Resources Management API',
@@ -197,34 +185,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('GMAIL_ACCOUNT')
 EMAIL_HOST_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
-
-# allauth settings
-ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
-ACCOUNT_USER_MODEL = 'users.CustomUser'
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION ='mandatory'
-ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
-
-
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": os.getenv('GOOGLE_CLIENT_ID'),
-            "secret": os.getenv('GOOGLE_SECRET_ID'),
-            "key": "",
-        },
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-        "VERIFIED_EMAIL": True,
-    },
-}
