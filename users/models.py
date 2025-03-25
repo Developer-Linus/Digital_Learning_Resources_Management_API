@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, superuser=False):
+    def create_user(self, email, password=None, superuser=False):
         # create and return a normal user
         if not email:
             raise ValueError('Email is required.')
@@ -16,11 +16,9 @@ class CustomUserManager(BaseUserManager):
         except ValidationError:
             raise ValueError('Invalid email format.')  # Raise an error for invalid emails
         
-        if not username:
-            raise ValueError('Username is required.')
         
         email = self.normalize_email(email)
-        user = self.model(username=username, email=email)
+        user = self.model(email=email)
         user.set_password(password)
         
         if superuser: # If it's a superuser set special flags before saving in database
@@ -33,8 +31,8 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         
         return user
-    def create_superuser(self, username, email, password):
-        return self.create_user(username, email, password, superuser=True)
+    def create_superuser(self, email, password):
+        return self.create_user(email, password, superuser=True)
     
 # Create custom user model
 class CustomUser(AbstractBaseUser, PermissionsMixin): 
@@ -45,7 +43,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=100, unique=True, blank=False, null=False)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -57,7 +54,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
     
     USERNAME_FIELD = 'email' # Authentication by email instead of django default username
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
     
     def __str__(self):
         return self.email

@@ -6,7 +6,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     # Ensure only non-sensitive data are exposed
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email']
+        fields = ['id', 'email']
 
 #Serializer for the Profile Model
 class ProfileSerializer(serializers.ModelSerializer):
