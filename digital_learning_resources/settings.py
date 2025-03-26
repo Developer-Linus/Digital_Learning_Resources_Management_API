@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # App for JWT authentication
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist', # Used for blacklisting during logout
     
     #drf-spectacular app (collects all the API resources and serve it to Swagger UI)
     'drf_spectacular',

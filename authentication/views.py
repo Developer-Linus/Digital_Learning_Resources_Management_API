@@ -1,7 +1,7 @@
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserRegistrationSerializer
+from .serializers import UserRegistrationSerializer, LogoutSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -29,3 +29,16 @@ class LoginView(APIView):
                 'refresh': str(refresh)
             }, status=status.HTTP_200_OK)
         return Response({'Error': 'Invalid email or password'}, status=status.HTTP_400_BAD_REQUEST)
+
+class LogoutAPIView(generics.GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        return Response({'Message': 'Logout successful.'}, status=status.HTTP_200_OK)
+    
+    

@@ -7,6 +7,43 @@ info:
     place to write your notes as you go through the material and either mark it as
     important for future reference
 paths:
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /api/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Logout'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Logout'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Logout'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logout'
+          description: ''
   /api/auth/register/:
     post:
       operationId: auth_register_create
@@ -14,6 +51,7 @@ paths:
       - auth
       security:
       - jwtAuth: []
+      - {}
       responses:
         '200':
           description: No response body
@@ -110,6 +148,13 @@ components:
       required:
       - email
       - id
+    Logout:
+      type: object
+      properties:
+        refresh:
+          type: string
+      required:
+      - refresh
     Profile:
       type: object
       properties:
