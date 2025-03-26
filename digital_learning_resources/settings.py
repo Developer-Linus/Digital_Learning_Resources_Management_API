@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist', # Used for blacklisting during logout
     
-    #drf-spectacular app (collects all the API resources and serve it to Swagger UI)
-    'drf_spectacular',
+    'drf_yasg',
     
 ]
 
@@ -144,9 +143,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
    
 }
@@ -170,16 +167,10 @@ SIMPLE_JWT = {
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
 ]
-# Spectacular Settings
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Digital Learning Resources Management API',
-    'DESCRIPTION': 'This project aims to provide an API managment for digital resources. One can create, read(retrieve), update, or delete a resource. You will have a place to write your notes as you go through the material and either mark it as important for future reference',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-}
 
 
 # Google SMTP Server configuration to send emails
+EMAIL_USE_TLS=True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST ='smtp.gmail.com'
 EMAIL_PORT = 587

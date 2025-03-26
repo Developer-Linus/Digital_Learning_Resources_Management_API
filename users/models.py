@@ -5,6 +5,7 @@ from django.utils.timezone import now
 from phonenumber_field.modelfields import PhoneNumberField #Used for phone number validation
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, superuser=False):
@@ -45,6 +46,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
+    is_verified = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
     
@@ -58,6 +60,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+    
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        tokens = {
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        }
+        return tokens
 
 # Create profile model extending custom user model
 # -Stores extra user details without bloating CustomUser model

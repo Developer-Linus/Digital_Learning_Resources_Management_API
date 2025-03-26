@@ -2,13 +2,14 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
+from django.contrib.auth import authenticate
+from rest_framework.exceptions import AuthenticationFailed
 
 
 User = get_user_model()
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    
     class Meta:
         model = User
         fields = ['email', 'password', 'password2']
@@ -17,6 +18,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
         }
     def validate(self, attrs):
+        if len(attrs['password'])<8:
+            return serializers.ValidationError('Password must be at least 8 characters.')
         if attrs['password']!= attrs['password2']:
             return serializers.ValidationError('Password fields did not match.')
         return attrs
@@ -25,10 +28,34 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             email= validated_data['email'],
             password = validated_data['password']
         )
+        return user
+
+class LoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=255)
+    password = serializers.CharField(max_length=68, write_only=True)
+    tokens = serializers.CharField(max_length=555, read_only=True)
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'tokens']
+
+    
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        password = attrs.get('password', '')
         
-        return {
-            'user': user,
-        }
+        user = authenticate(email=email, password=password)
+        
+        if not user:
+            raise AuthenticationFailed('Invalid login credentials.')
+        if not user.is_active:
+            raise AuthenticationFailed('Account disabled. Please contact admin.')
+        if not user.is_verified:
+            raise AuthenticationFailed('Email not verified. Request a new verification link.')
+        return {'email': user.email,
+                'tokens': user.tokens
+                }
+    
+
 class LogoutSerializer(serializers.Serializer):
     refresh = serializers.CharField()
     
@@ -44,4 +71,10 @@ class LogoutSerializer(serializers.Serializer):
             RefreshToken(self.token).blacklist()
         except TokenError:
             serializers.ValidationError('Invalid or Expired token.')
+
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(max_length=555)
+    class Meta:
+        model = User
+        fields = ['token']
         
