@@ -13,12 +13,12 @@ class Category(models.Model):
 
 # Resource model
 class Resource(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='resources')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='resources')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='resources')
     resource_name = models.CharField(max_length=255, null=False, blank=False)
     resource_author = models.CharField(max_length=200, null=False, blank=False)
     resource_url = models.URLField(max_length=300, null=False, blank=True)
-    resource_image = models.ImageField(upload_to='/resource-images', null=True, blank=True)
+    resource_image = models.ImageField(upload_to='resource_images/', null=True, blank=True)
     publication_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,7 +28,7 @@ class Resource(models.Model):
     
 # LearningLog Model
 class LearningLog(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='logs')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='logs')
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='logs')
     notes = models.TextField(null=False, blank=False)
     review = models.CharField(max_length=300)
@@ -40,7 +40,7 @@ class LearningLog(models.Model):
 
 # Resource status model
 class ResourceStatus(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='resource_status')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='resource_status')
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='status')
     in_progress = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
@@ -49,7 +49,7 @@ class ResourceStatus(models.Model):
     
 # Bookmark Model
 class Bookmark(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='bookmarks')
     created_at = models.DateTimeField(auto_now_add=True)
     
