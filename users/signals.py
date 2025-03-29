@@ -16,8 +16,3 @@ def save_user_profile(sender, instance, **kwargs):
     if hasattr(instance, 'profile'):
         instance.profile.save() # Save the linked profile
 
-# Signal to delete a profile when a user deletes account
-@receiver(post_delete, sender=CustomUser)
-def delete_user_profile(sender, instance, **kwargs):
-    instance.profile.delete()
-
