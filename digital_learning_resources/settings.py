@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'phonenumber_field',
     'authentication.apps.AuthenticationConfig',
+    'resources.apps.ResourcesConfig',
     'rest_framework.authtoken',
     # App for JWT authentication
     'rest_framework_simplejwt',
@@ -43,6 +44,17 @@ INSTALLED_APPS = [
     'drf_yasg',
     
 ]
+
+# Swagger Settings to allow use of Bearer token for authorization
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,8 +155,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
    
 }
 
