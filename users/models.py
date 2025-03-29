@@ -20,6 +20,7 @@ class CustomUserManager(BaseUserManager):
         
         email = self.normalize_email(email)
         user = self.model(email=email)
+        user.set_password(password)
         
         if superuser: # If it's a superuser set special flags before saving in database
             user.role = 'admin'
