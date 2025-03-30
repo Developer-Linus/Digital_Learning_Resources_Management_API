@@ -8,14 +8,18 @@ import datetime
 
 # Category Serializer
 class CategorySerializer(serializers.ModelSerializer):
+    owner = serializers.PrimaryKeyRelatedField(read_only=True) 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'description']
-        read_only_fields = ['id']
+        fields = ['id', 'owner', 'name', 'description']
     # Validate category name
     def validate_name(self, value):
         if not value:
             raise serializers.ValidationError('Category name cannot be empty.')
+        request = self.context.get('request')  # Get request from serializer context
+        if request and request.user.is_authenticated:
+            if Category.objects.filter(owner=request.user, name=value).exists():  # Use .exists()
+                raise serializers.ValidationError('Category with this name already exists.')
         return value
     # Validate category description
     def validate_description(self, value):
@@ -25,17 +29,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 # Resource Serializer
 class ResourceSerializer(serializers.ModelSerializer):
-    
-    owner = CustomUserSerializer(read_only=True)
-    category = CategorySerializer(read_only=True)
-    
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
     class Meta:
         model = Resource
         fields = ['id', 'owner', 'category', 'resource_name', 'resource_author', 'resource_url', 'resource_image', 'publication_date', 'created_at']
-        read_only_fields = ['id']
     # validate resource name - not empty
     def validate_name(self, value):
-        if not value:
+        if not value.strip():
             raise serializers.ValidationError('Resource name must be provided.')
         return value
     # validate URL link

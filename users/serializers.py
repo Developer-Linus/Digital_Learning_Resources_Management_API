@@ -7,6 +7,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'email']
+        read_only_fields = ['email']
 
 #Serializer for the Profile Model
 class ProfileSerializer(serializers.ModelSerializer):

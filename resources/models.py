@@ -5,6 +5,7 @@ User = get_user_model()
 
 # Category model
 class Category(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='category')
     name = models.CharField(max_length=30, null=False, blank=False, default='Uncategorized')
     description=models.TextField(null=True, blank=True)
     
@@ -14,7 +15,7 @@ class Category(models.Model):
 # Resource model
 class Resource(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='resources')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='resources')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='resources', default="General", null=False, blank=False)
     resource_name = models.CharField(max_length=255, null=False, blank=False)
     resource_author = models.CharField(max_length=200, null=False, blank=False)
     resource_url = models.URLField(max_length=300, null=False, blank=True)
