@@ -15,4 +15,10 @@ urlpatterns = [
     path('api/resources/create/', views.ResourceCreateAPIView.as_view(), name='create_resource'),
     path('api/resources/<int:pk>/delete/', views.ResourceDeleteAPIView.as_view(), name='delete_resource'),
     
+    # LearningLogs URLs
+    path('api/learning_logs/', views.LearningLogListAPIView.as_view(), name='list_learning_logs'),
+    path('api/learning_logs/<int:pk>/retrieve/', views.LearningLogDetailAPIView.as_view(), name='learning_log'),
+    path('api/learning_logs/<int:pk>/update/', views.LearningLogUpdateAPIView.as_view(), name='update_learning_log'),
+    path('api/learning_logs/create/', views.LearningLogCreateAPIView.as_view(), name='create_learning_log'),
+    path('api/learning_logs/<int:pk>/delete/', views.LearningLogDeleteAPIView.as_view(), name='delete_learning_log'),
 ]

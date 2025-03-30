@@ -55,21 +55,22 @@ class ResourceSerializer(serializers.ModelSerializer):
         
 # Learning Log serializer
 class LearningLogSerializer(serializers.ModelSerializer):
-    owner = CustomUserSerializer(read_only=True)
-    resource = ResourceSerializer(read_only=True)
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    # resource = ResourceSerializer(read_only=True)
     
     class Meta: 
         model = LearningLog
-        fields = ['id', 'owner', 'resource', 'notes', 'review']
-        read_only_fields = ['id']
+        fields = ['owner', 'resource', 'notes', 'review']
     # validae notes and review
     def validate(self, attrs):
-        notes = attrs['notes']
-        review = attrs['review']
-        
+        resource = attrs.get('resource')
+        notes = attrs.get('notes')
+        review = attrs.get('review')
+        if LearningLog.objects.filter(resource=resource).exists():
+            raise serializers.ValidationError('One log per resource is allowed.')
         if not notes:
             raise serializers.ValidationError('Notes are required.')
-        if len(review) > 350:
+        if len(review) > 300:
             raise serializers.ValidationError('Review is too long. Cannot exceed 350 characters.')
         return attrs
 
