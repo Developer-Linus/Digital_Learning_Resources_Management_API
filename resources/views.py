@@ -101,6 +101,28 @@ class ResourceStatusDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin,
     serializer_class = serializers.ResourceStatusSerializer
     permission_classes = [permissions.IsAuthenticated]
     
+# View for bookmarking a resource
+class BookmarkCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.CreateAPIView):
+    serializer_class = serializers.BookmarkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for Listing Bookmarks
+class BookmarkListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):
+    serializer_class = serializers.BookmarkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for retrieving a specific bookmark
+class BookmarkDetailAPIView(OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
+    serializer_class = serializers.BookmarkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for deleting a Bookmark
+class BookmarkDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, generics.DestroyAPIView):
+    serializer_class = serializers.BookmarkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    
     
     
     

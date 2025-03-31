@@ -112,18 +112,20 @@ class ResourceStatusSerializer(serializers.ModelSerializer):
 
 # Bookmark serializer 
 class BookmarkSerializer(serializers.ModelSerializer):
-    owner = CustomUserSerializer(read_only=True)
-    resource = ResourceSerializer(read_only=True)
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
     
     class Meta:
         model = Bookmark
         fields = ['id', 'owner', 'resource', 'created_at']
         read_only_fields = ['id', 'created_at']
     
-    # check resource validity
-    def validate_resource(self, value):
-        try:
-            Resource.objects.get(id=value.id)
-        except Resource.DoesNotExist:
-            raise serializers.ValidationError('Invalid resource')
-        return value
+    # check that a user cannot bookmark same resource more than once
+    def validate(self, attrs):
+        resource = attrs.get('resource')
+        
+        instance = self.instance
+        if Bookmark.objects.filter(resource = resource).exists():
+            raise serializers.ValidationError('Resource already bookmarked.')
+        
+        return attrs
+   
