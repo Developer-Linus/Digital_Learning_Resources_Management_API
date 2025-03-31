@@ -74,7 +74,7 @@ class VerifyEmail(views.APIView):
         # Get the token from the request query parameters
         token = request.GET.get('token')
 
-        # Try to decode the token and verify the user's email
+        # Decode the token and verify the user's email
         try:
             # Decode the token using the secret key and HS256 algorithm
             payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
