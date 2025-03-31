@@ -21,4 +21,11 @@ urlpatterns = [
     path('api/learning_logs/<int:pk>/update/', views.LearningLogUpdateAPIView.as_view(), name='update_learning_log'),
     path('api/learning_logs/create/', views.LearningLogCreateAPIView.as_view(), name='create_learning_log'),
     path('api/learning_logs/<int:pk>/delete/', views.LearningLogDeleteAPIView.as_view(), name='delete_learning_log'),
+    
+    # ResourceStatus URLs
+    path('api/resource_status/', views.ResourceStatusListAPIView.as_view(), name='list_resources_status'),
+    path('api/resource_status/<int:pk>/retrieve/', views.ResourceStatusDetailAPiView.as_view(), name='resource_status'),
+    path('api/resource_status/<int:pk>/update/', views.ResourceStatusUpdateAPIView.as_view(), name='update_resource_status'),
+    path('api/resource_status/create/', views.ResourceStatusCreateAPIView.as_view(), name='create_resource_status'),
+    path('api/resource_status/<int:pk>/delete/', views.ResourceStatusDeleteAPIView.as_view(), name='delete_resource_status'),
 ]

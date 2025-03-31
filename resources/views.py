@@ -32,7 +32,7 @@ class ResourceListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.
     serializer_class = serializers.ResourceSerializer
     
 # View for creating a resource
-class ResourceCreateAPIView(OwnerCreateMixin, generics.CreateAPIView):
+class ResourceCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.ResourceSerializer
 
@@ -52,7 +52,7 @@ class ResourceDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, gener
     serializer_class = serializers.ResourceSerializer
 
 # View for creating  a Learning Log
-class LearningLogCreateAPIView(OwnerCreateMixin, generics.CreateAPIView):
+class LearningLogCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.LearningLogSerializer
     
@@ -62,7 +62,7 @@ class LearningLogListAPIView(OwnerQuerySetMixin,CustomListResponseMixin, generic
     permission_classes = [permissions.IsAuthenticated]
 
 # View to reterive a learning log
-class LearningLogDetailAPIView(OwnerCreateMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
+class LearningLogDetailAPIView(OwnerCreateMixin, OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
     serializer_class = serializers.LearningLogSerializer
     permission_classes = [permissions.IsAuthenticated]
     
@@ -74,6 +74,31 @@ class LearningLogUpdateAPIView(OwnerQuerySetMixin, CustomUpdateResponseMixin, ge
 # View for deleting a learning log
 class LearningLogDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, generics.DestroyAPIView):
     serializer_class = serializers.LearningLogSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for creating a resource status
+class ResourceStatusCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.CreateAPIView):
+    serializer_class = serializers.ResourceStatusSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for listing resources status
+class ResourceStatusListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):
+    serializer_class = serializers.ResourceStatusSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for Retrieving a resource status
+class ResourceStatusDetailAPiView(OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
+    serializer_class = serializers.ResourceStatusSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for updating a resource status
+class ResourceStatusUpdateAPIView(OwnerQuerySetMixin, CustomUpdateResponseMixin, generics.UpdateAPIView):
+    serializer_class = serializers.ResourceStatusSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+# View for deleting a resource status instance
+class ResourceStatusDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, generics.DestroyAPIView):
+    serializer_class = serializers.ResourceStatusSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     

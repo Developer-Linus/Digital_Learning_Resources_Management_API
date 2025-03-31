@@ -45,7 +45,7 @@ class ResourceStatus(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='status')
     in_progress = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
-    date_completed = models.DateField()
+    date_completed = models.DateField(null=True, blank=True)
     is_important = models.BooleanField(default=False)
     
 # Bookmark Model

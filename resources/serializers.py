@@ -56,43 +56,58 @@ class ResourceSerializer(serializers.ModelSerializer):
 # Learning Log serializer
 class LearningLogSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
-    # resource = ResourceSerializer(read_only=True)
     
     class Meta: 
         model = LearningLog
-        fields = ['owner', 'resource', 'notes', 'review']
-    # validae notes and review
+        fields = ['id', 'owner', 'resource', 'notes', 'review']
+    
     def validate(self, attrs):
         resource = attrs.get('resource')
         notes = attrs.get('notes')
         review = attrs.get('review')
-        if LearningLog.objects.filter(resource=resource).exists():
-            raise serializers.ValidationError('One log per resource is allowed.')
-        if not notes:
+        
+        instance = self.instance  # Get the current instance if updating
+        
+        if instance:
+            # Exclude the current instance from the uniqueness check
+            if LearningLog.objects.filter(resource=resource).exclude(id=instance.id).exists():
+                raise serializers.ValidationError('A learning log for this resource already exists.')
+        else:
+            # Standard uniqueness check when creating a new log
+            if LearningLog.objects.filter(resource=resource).exists():
+                raise serializers.ValidationError('A learning log for this resource already exists.')
+        
+        if not notes or notes.isspace():
             raise serializers.ValidationError('Notes are required.')
-        if len(review) > 300:
+        if len(review) > 350:
             raise serializers.ValidationError('Review is too long. Cannot exceed 350 characters.')
         return attrs
 
 # Resource status serializer
 class ResourceStatusSerializer(serializers.ModelSerializer):
-    owner = CustomUserSerializer(read_only=True)
-    resource = ResourceSerializer(read_only=True)
-    
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = ResourceStatus
         fields = ['id', 'owner', 'resource', 'in_progress', 'is_completed', 'date_completed', 'is_important']
-        read_only_fields = ['id']
     # Validate in_progress and is_completed fields
     def validate(self, attrs):
-        in_progress = attrs['in_progress']
-        is_completed = attrs['is_completed']
+        in_progress = attrs.get('in_progress')
+        is_completed = attrs.get('is_completed')
+        resource = attrs.get('resource')
         
+        # Only check for uniqueness if creating a new instance
+        if self.instance is None and ResourceStatus.objects.filter(resource=resource).exists():
+            raise serializers.ValidationError({'resource': 'This resource already has a status.'})
+        
+    
         if not isinstance(in_progress, bool):
             raise serializers.ValidationError('In progress status must be a boolean value.')
         if not isinstance(is_completed, bool):
             raise serializers.ValidationError('Is completed status must be a boolean value.')
-        raise attrs
+        if in_progress and is_completed:
+            raise serializers.ValidationError('In_progress and is_completed cannot be True at the same time.') 
+        return attrs
         
 
 # Bookmark serializer 
