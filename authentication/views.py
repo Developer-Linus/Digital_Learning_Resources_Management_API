@@ -8,32 +8,23 @@ from django.contrib.auth import get_user_model
 from .utils import Util
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-import jwt # For decoding the token provided by the user in the confirmation link.
-from django.conf import settings # To provide key for decoding token sent by user.
+import jwt
+from django.conf import settings
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 User = get_user_model()
 
-# Define a class for handling user registration
+# Define a class-based view for handling user registration
 class RegisterView(generics.GenericAPIView):
-    # Specify the serializer class for user registration
     serializer_class = UserRegistrationSerializer
-    # Allow any user to register (no authentication required)
     permission_classes = [permissions.AllowAny]
 
-    # Define a method to handle HTTP POST requests for user registration
     def post(self, request):
-        # Get the user data from the request
         user = request.data
-        # Create a serializer instance with the user data
         serializer = self.serializer_class(data=user)
-
-        # Check if the serializer is valid
         if serializer.is_valid():
-            # Save the user data to the database
             user = serializer.save()
-            # Get the user data from the serializer
             user_data = serializer.data
 
             # Get the user instance from the database using the email address
@@ -68,7 +59,7 @@ class VerifyEmail(views.APIView):
     serializer_class = EmailVerificationSerializer
     
     token_param_config = openapi.Parameter('token', in_=openapi.IN_QUERY, type=openapi.TYPE_STRING)
-    # Define a method to handle HTTP GET requests for email verification
+    
     @swagger_auto_schema(manual_parameters=[token_param_config])
     def get(self, request):
         # Get the token from the request query parameters
@@ -85,16 +76,13 @@ class VerifyEmail(views.APIView):
             if not user.is_verified:
                 # Mark the user's email as verified
                 user.is_verified = True
-                # Save the changes to the database
                 user.save()
-                # Return a success response with a message
                 return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
             else:
                 # If the user's email is already verified, return an error response with a message
                 return Response({'message': 'Email already verified'}, status=status.HTTP_400_BAD_REQUEST)
         # Catch the exception if the token has expired
         except jwt.ExpiredSignatureError:
-            # Return an error response with a message
             return Response({'error': 'The token has expired.'}, status=status.HTTP_400_BAD_REQUEST)
         # Catch the exception if the token is invalid
         except jwt.DecodeError:
@@ -102,20 +90,19 @@ class VerifyEmail(views.APIView):
             return Response({'error': 'Invalid token.'}, status=status.HTTP_400_BAD_REQUEST)
         # Catch the exception if the user does not exist
         except User.DoesNotExist:
-            # Return an error response with a message
             return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
         # Catch any other exceptions
         except Exception as e:
-            # Return an error response with the exception message
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+# Define class-based view for login
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-        
+
+# Define class-based view for logout     
 class LogoutAPIView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
     permission_classes = [permissions.IsAuthenticated]

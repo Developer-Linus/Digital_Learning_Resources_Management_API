@@ -2,9 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class BaseModelMixin:
-    """
-    Base mixin to dynamically retrieve the model name from the serializer class.
-    """
+    #Base mixin to dynamically retrieve the model name from the serializer class.
     @property
     def model_name(self):
         if hasattr(self, 'serializer_class') and hasattr(self.serializer_class.Meta, 'model'):
@@ -12,23 +10,17 @@ class BaseModelMixin:
         return "Object"  # Default fallback
 
 class OwnerCreateMixin:
-    """
-    Automatically assigns the logged-in user as the owner of an object.
-    """
+    # Assigns the logged-in user as the owner of an object.
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 class OwnerQuerySetMixin:
-    """
-    Filters queryset based on the logged-in user.
-    """
+    # Filters queryset based on the logged-in user.
     def get_queryset(self):
         return self.serializer_class.Meta.model.objects.filter(owner=self.request.user)
 
 class CreateResponseMixin(BaseModelMixin):
-    """
-    Custom response mixin for create operations.
-    """
+    # Custom response mixin for create operations.
     def create(self, request, *args, **kwargs):
         try:
             serializer = self.get_serializer(data=request.data)
@@ -61,9 +53,7 @@ class CreateResponseMixin(BaseModelMixin):
             )
 
 class CustomListResponseMixin(BaseModelMixin):
-    """
-    Custom response mixin for list operations.
-    """
+    # Custom response mixin for list operations.
     def list(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
@@ -95,9 +85,7 @@ class CustomListResponseMixin(BaseModelMixin):
             )
 
 class CustomRetrieveResponseMixin(BaseModelMixin):
-    """
-    Custom response mixin for retrieve operations.
-    """
+    # Custom response mixin for retrieve operations.
     def retrieve(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -121,9 +109,7 @@ class CustomRetrieveResponseMixin(BaseModelMixin):
             )
 
 class CustomUpdateResponseMixin(BaseModelMixin):
-    """
-    Custom response mixin for update operations.
-    """
+    # Custom response mixin for update operations.
     def update(self, request, *args, **kwargs):
         try:
             response = super().update(request, *args, **kwargs)
@@ -146,9 +132,7 @@ class CustomUpdateResponseMixin(BaseModelMixin):
             )
 
 class CustomDeleteResponseMixin(BaseModelMixin):
-    """
-    Custom response mixin for delete operations.
-    """
+    # Custom response mixin for delete operations.
     def delete(self, request, *args, **kwargs):
         try:
             instance = self.get_object()

@@ -8,7 +8,9 @@ from rest_framework.exceptions import AuthenticationFailed
 
 User = get_user_model()
 
+# User registration serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     class Meta:
         model = User
@@ -30,9 +32,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+# Serializer for login
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255)
-    password = serializers.CharField(max_length=68, write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, max_length=68, write_only=True)
     tokens = serializers.CharField(max_length=555, read_only=True)
     class Meta:
         model = User
@@ -55,7 +58,7 @@ class LoginSerializer(serializers.ModelSerializer):
                 'tokens': user.tokens
                 }
     
-
+# Serializer for logout
 class LogoutSerializer(serializers.Serializer):
     refresh = serializers.CharField()
     
@@ -72,6 +75,7 @@ class LogoutSerializer(serializers.Serializer):
         except TokenError:
             serializers.ValidationError('Invalid or Expired token.')
 
+# Serializer for email verification
 class EmailVerificationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=555)
     class Meta:

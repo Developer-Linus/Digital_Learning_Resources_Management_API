@@ -29,4 +29,5 @@ class CustomUserAdmin(UserAdmin):
     ordering = ['email']
 # Register custom user in the admin interface
 admin.site.register(CustomUser, CustomUserAdmin)
+
 admin.site.register(Profile)
