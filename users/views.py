@@ -3,11 +3,7 @@ from rest_framework import status
 from rest_framework import generics, permissions
 from .models import Profile
 from .serializers import ProfileSerializer
-
-class ProfileViewMixin:
-    def get_object(self):
-        # Return the user's profile
-        return self.request.user.profile
+from .mixins import ProfileViewMixin
 
 class ProfileDetailAPIView(ProfileViewMixin, generics.RetrieveAPIView):
     # Ensure that only authenticated users can access this view

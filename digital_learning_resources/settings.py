@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'authentication.apps.AuthenticationConfig',
     'resources.apps.ResourcesConfig',
+    'nofifications.apps.NotificationsConfig',
     'rest_framework.authtoken',
     # App for JWT authentication
     'rest_framework_simplejwt',
