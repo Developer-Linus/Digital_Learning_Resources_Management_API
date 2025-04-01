@@ -5,18 +5,16 @@ from .models import Profile
 from .serializers import ProfileSerializer
 from .mixins import ProfileViewMixin
 
+# View for viewing the profile - user must be authenticated
 class ProfileDetailAPIView(ProfileViewMixin, generics.RetrieveAPIView):
-    # Ensure that only authenticated users can access this view
     permission_classes = (permissions.IsAuthenticated,)
-    # Specify the serializer to use for this view
     serializer_class = ProfileSerializer
 
+# View for updating profile - user must be authenticated
 class ProfileUpdateAPIView(ProfileViewMixin, generics.UpdateAPIView):
-    # Ensure that only authenticated users can access this view
     permission_classes = (permissions.IsAuthenticated,)
-    # Specify the serializer to use for this view
     serializer_class = ProfileSerializer
 
+# View for deleting a profile - user must be authenticated
 class ProfileDeleteAPIView(ProfileViewMixin, generics.DestroyAPIView):
-    # Ensure that only authenticated users can access this view
     permission_classes = (permissions.IsAuthenticated,)
