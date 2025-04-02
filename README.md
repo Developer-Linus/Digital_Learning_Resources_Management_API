@@ -3,16 +3,55 @@
 
 ### Table of Contents
 1. [Overview](#overview)
-2. [Getting Started](#getting-started)
-3. [API Endpoints](#api-endpoints)
-4. [Request and Response Formats](#request-and-response-formats)
+2. [Features](#Features)
+3. [Getting Started](#getting-started)
+4. [API Endpoints](#api-endpoints)
 5. [Error Handling](#error-handling)
 6. [Security Considerations](#security-considerations)
 
 ### Overview
  The Digital Learning Resources Management API is designed to simplify the process of organizing and retrieving digital learning resources. It addresses the common problem of losing track of valuable resources, allowing users to store, manage, and access materials in a centralized database. The API enables users to add, update, retrieve, and delete resources, as well as track progress, bookmark favorite materials, and access a learning log. By providing a streamlined way to manage digital learning resources, this API aims to help users achieve their learning goals efficiently and effectively.
+### Features
+The Digital Learning Resources Management API is designed to provide a comprehensive platform for managing digital learning resources. The API supports a range of features that enable users to create, read, update, and delete resources, as well as track their learning progress and interact with the resources in a meaningful way.
 
-### Getting Started
+#### 2.1. Resource Management
+2.1.1 **Create Resource**: Users can create new resources, including text-based content, images, videos, and other file types.
+2.1.2 **Read Resource**: Users can retrieve existing resources, including their metadata and content.
+2.1.3. **Update Resource**: Users can update existing resources, including their metadata and content.
+2.1.4. **Delete Resource**: Users can delete existing resources, including their metadata and content.
+
+#### 2.2 Learning Log Management
+2.2.1. **Create Learning Log**: Users can create new learning logs to track their progress and notes for each resource.
+2.2.2. **Read Learning Log**: Users can retrieve existing learning logs, including their notes and progress.
+2.2.3. **Update Learning Log**: Users can update existing learning logs, including their notes and progress.
+2.2.4. **Delete Learning Log**: Users can delete existing learning logs.
+
+#### 2.3. Resource Status Management
+2.3.1. **Update Resource Status**: Users can update the status of a resource, including marking it as completed, in progress, or not started.
+2.3.2. **Get Resource Status**: Users can retrieve the status of a resource.
+
+#### 2.4. Bookmarking
+2.4.1. **Bookmark Resource**: Users can bookmark resources for future reference.
+2.4.2. **Unbookmark Resource**: Users can unbookmark resources.
+2.4.3. **Get Bookmarked Resources**: Users can retrieve a list of bookmarked resources.
+
+#### 2.5. Authentication and Authorization
+2.5.1. **Robust Authentication**: The API uses a robust authentication system to ensure that only authorized users can access and modify resources.
+2.5.2. **Role-Based Access Control**: The API uses role-based access control to ensure that users can only perform actions that are authorized for their role.
+
+#### 2.6. Notification System
+2.6.1. **Resource Creation Notifications**: Users can receive notifications when a new resource is created.
+2.6.2. **Learning Log Creation Notifications**: Users can receive notifications when a new learning log is created.
+2.6.3. **Bookmarking Notifications**: Users can receive notifications when a resource is bookmarked or unbookmarked.
+
+#### 2.7. Filtering and Ordering
+2.7.1. **Filtering**: The API supports filtering for list API views, allowing users to retrieve resources based on specific criteria, such as resource type, status, or tags.
+2.7.2. **Ordering**: The API supports ordering for list API views, allowing users to retrieve resources in a specific order, such as alphabetical or chronological.
+
+#### 2.8. Pagination
+2.8.1. **Pagination**: The API supports pagination for list API views, allowing users to retrieve a limited number of resources at a time and navigate through the results.
+
+### 3.0. Getting Started
 
 This guide will help you set up and run the Django REST Framework (DRF) project locally using MySQL as the database.
 
@@ -24,15 +63,15 @@ Ensure you have the following installed on your machine:
 - Virtualenv (optional but recommended)
 - Git
 
-### Installation Steps
+### 3.1. Installation Steps
 
-#### 1. Clone the Repository
+#### 3.1.1. Clone the Repository
 ```sh
 git clone https://github.com/Developer-Linus/Digital_Learning_Resources_Management_API.git
 cd Digital_Learning_Resources_Management_API
 ```
 
-#### 2. Create and Activate a Virtual Environment
+#### 3.1.2. Create and Activate a Virtual Environment
 ```sh
 python -m venv venv
 # Activate virtual environment
@@ -42,12 +81,12 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
+### 3.1.3. Install Dependencies
 ```sh
 pip install -r requirements.txt
 ```
 
-#### 4. Configure the `.env` File
+#### 3.1.4. Configure the `.env` File
 Create a `.env` file in the project root and add the following:
 ```ini
 DEBUG=True
@@ -61,23 +100,23 @@ GMAIL_ACCOUNT=your_gmail_account
 GMAIL_APP_PASSWORD=your_gmail_app_password
 ```
 
-#### 5. Set Up the Database
+#### 3.1.5. Set Up the Database
 - Ensure MySQL is running.
 - Create the database manually if it doesn’t exist:
 ```sql
 CREATE DATABASE your_database_name;
 ```
-#### 6. Apply Migrations
+#### 3.1.6. Apply Migrations
 ```sh
 python manage.py migrate
 ```
-#### 7. Create a Superuser (Optional)
+#### 3.1.7. Create a Superuser (Optional)
 ```sh
 python manage.py createsuperuser
 ```
 Follow the prompts to create an admin account.
 
-#### 8. Run the Development Server
+#### 3.1.8. Run the Development Server
 ```sh
 python manage.py runserver
 ```
@@ -94,13 +133,13 @@ The project should now be running at `http://127.0.0.1:8000/`
 - **Migrations not applied properly**
   - Try `python manage.py makemigrations` followed by `python manage.py migrate`.
 
-### API Endpoints
-- The API endpoints are documented using Swagger UI, which provides an interactive and easily accessible way to explore the available endpoints. You can access the Swagger UI documentation at http://localhost:8000/swagger/.
+### 4.0. API Endpoints
 
-### Request and Response Formats
- Describe the formats used for API requests and responses, including any required headers, query parameters, or body data.
+- The API endpoints are documented using Swagger UI, which provides an interactive and easily accessible way to explore the available endpoints. You can access the Swagger UI documentation at http://localhost:8000/.
 
-### Error Handling
+
+### 5.0. Error Handling
+
 The API uses a custom error handling approach to provide informative error responses. The following error responses are used:
 
 * **400 Bad Request**: Returned when the request data is invalid or cannot be processed. Examples of 400 errors include:
@@ -124,5 +163,32 @@ In general, the API returns error responses with a JSON object containing the fo
 
 The API uses standard HTTP status codes to indicate the outcome of a request, and the error responses are designed to be informative and helpful for debugging purposes. This allows developers to quickly identify and resolve issues, and ensures that the API is robust and reliable.
 
-### Security Considerations
- Discuss any security considerations or best practices for using the API, including authentication, authorization, and data encryption.
+### 6.0. Security Considerations
+
+The Digital Learning Resources Management API is designed with security in mind, and there are several considerations and best practices that users should be aware of when using the API.
+
+#### 6.1. Authentication and Authorization
+
+The API uses JSON Web Tokens (JWT) for authentication and authorization. Users must provide a valid JWT token in the `Authorization` header of their requests to access protected endpoints. The token is validated on each request, and if it is invalid or expired, the user will receive a 401 Unauthorized response.
+
+The API also uses permission classes to control access to endpoints. The `IsAuthenticated` permission class ensures that only authenticated users can access protected endpoints.
+
+#### 6.2. Throttling
+
+To prevent abuse and ensure fair usage, the API has a throttling limit of 1000 requests per day for users. If a user exceeds this limit, they will receive a 429 Too Many Requests response.
+
+#### 6.3. Data Encryption
+
+The API uses HTTPS to encrypt data in transit. This ensures that all communication between the client and server is secure and cannot be intercepted or tampered with.
+
+#### 6.4. Server Configuration
+
+The API is configured to run on a secure server with the following settings:
+
+* `ALLOWED_HOSTS`: This setting ensures that the API only accepts requests from the specified domain.
+* `SECURE_SSL_REDIRECT = True`: This setting redirects all HTTP requests to HTTPS, ensuring that all communication is encrypted.
+* `SECURE_HSTS_SECONDS = 31536000`: This setting enables HTTP Strict Transport Security (HSTS), which instructs the browser to only use HTTPS when communicating with the server.
+* `SECURE_CONTENT_TYPE_NOSNIFF = True`: This setting prevents the browser from guessing the MIME type of a response, which can help prevent cross-site scripting (XSS) attacks.
+* `SECURE_BROWSER_XSS_FILTER = True`: This setting enables the browser's XSS filter, which can help prevent XSS attacks.
+* `SESSION_COOKIE_SECURE = True`: This setting ensures that session cookies are transmitted over a secure connection.
+* `CSRF_COOKIE_SECURE = True`: This setting ensures that CSRF cookies are transmitted over a secure connection.
