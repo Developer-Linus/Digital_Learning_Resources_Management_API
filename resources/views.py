@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions, filters
+from rest_framework.pagination import PageNumberPagination
 from . import serializers
 from rest_framework.response import Response
 
@@ -23,6 +24,8 @@ class CategoryListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name']
     ordering_fields = ['name', 'description']
+    pagination_class = PageNumberPagination
+    page_size = 10
     
 # view for deleting a category
 class CategoryDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, generics.DestroyAPIView):
@@ -36,6 +39,8 @@ class ResourceListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['resource_name', 'resource_author']
     ordering_fields = ['publication_date', 'created_at']
+    pagination_class = PageNumberPagination
+    page_size = 10
     
 # View for creating a resource
 class ResourceCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.CreateAPIView):
@@ -69,6 +74,8 @@ class LearningLogListAPIView(OwnerQuerySetMixin,CustomListResponseMixin, generic
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['resource', 'notes']
     ordering_fields = ['review', 'created_at']
+    pagination_class = PageNumberPagination
+    page_size = 10
 
 # View to reterive a learning log
 class LearningLogDetailAPIView(OwnerCreateMixin, OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
@@ -97,6 +104,8 @@ class ResourceStatusListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, gen
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['resource', 'in_progress', 'is_completed', 'date_completed']
     ordering_fields = ['in_progress', 'is_completed', 'date_completed']
+    pagination_class = PageNumberPagination
+    page_size = 10
 
 # View for Retrieving a resource status
 class ResourceStatusDetailAPiView(OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
@@ -125,6 +134,8 @@ class BookmarkListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['resource']
     ordering_fields = ['resource', 'created_at']
+    pagination_class = PageNumberPagination
+    page_size = 10
 
 # View for retrieving a specific bookmark
 class BookmarkDetailAPIView(OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):

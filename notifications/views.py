@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions, filters
 from.models import Notification
+from rest_framework.pagination import PageNumberPagination
 from .serializers import NotificationSerializer
 from rest_framework.response import Response
 
@@ -11,6 +12,8 @@ class NotificationListAPIView(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['verb', 'target']
     ordering_fields = ['verb', 'target', 'timestamp']
+    pagination_class = PageNumberPagination
+    page_size = 10
     
     def get_queryset(self):
         return Notification.objects.filter(recipient=self.request.user)
