@@ -9,43 +9,43 @@
 5. [Error Handling](#error-handling)
 6. [Security Considerations](#security-considerations)
 
-### Overview
+### 1.0. Overview
  The Digital Learning Resources Management API is designed to simplify the process of organizing and retrieving digital learning resources. It addresses the common problem of losing track of valuable resources, allowing users to store, manage, and access materials in a centralized database. The API enables users to add, update, retrieve, and delete resources, as well as track progress, bookmark favorite materials, and access a learning log. By providing a streamlined way to manage digital learning resources, this API aims to help users achieve their learning goals efficiently and effectively.
-### Features
+### 2.0. Features
 The Digital Learning Resources Management API is designed to provide a comprehensive platform for managing digital learning resources. The API supports a range of features that enable users to create, read, update, and delete resources, as well as track their learning progress and interact with the resources in a meaningful way.
 
 #### 2.1. Resource Management
-2.1.1 **Create Resource**: Users can create new resources, including text-based content, images, videos, and other file types.
-2.1.2 **Read Resource**: Users can retrieve existing resources, including their metadata and content.
-2.1.3. **Update Resource**: Users can update existing resources, including their metadata and content.
+2.1.1 **Create Resource**: Users can create new resources, including text-based content, images, videos, and other file types. <br>
+2.1.2 **Read Resource**: Users can retrieve existing resources, including their metadata and content. <br>
+2.1.3. **Update Resource**: Users can update existing resources, including their metadata and content. <br>
 2.1.4. **Delete Resource**: Users can delete existing resources, including their metadata and content.
 
 #### 2.2 Learning Log Management
-2.2.1. **Create Learning Log**: Users can create new learning logs to track their progress and notes for each resource.
-2.2.2. **Read Learning Log**: Users can retrieve existing learning logs, including their notes and progress.
-2.2.3. **Update Learning Log**: Users can update existing learning logs, including their notes and progress.
+2.2.1. **Create Learning Log**: Users can create new learning logs to track their progress and notes for each resource. <br>
+2.2.2. **Read Learning Log**: Users can retrieve existing learning logs, including their notes and progress. <br>
+2.2.3. **Update Learning Log**: Users can update existing learning logs, including their notes and progress. <br>
 2.2.4. **Delete Learning Log**: Users can delete existing learning logs.
 
 #### 2.3. Resource Status Management
-2.3.1. **Update Resource Status**: Users can update the status of a resource, including marking it as completed, in progress, or not started.
+2.3.1. **Update Resource Status**: Users can update the status of a resource, including marking it as completed, in progress, or not started. <br>
 2.3.2. **Get Resource Status**: Users can retrieve the status of a resource.
 
 #### 2.4. Bookmarking
-2.4.1. **Bookmark Resource**: Users can bookmark resources for future reference.
-2.4.2. **Unbookmark Resource**: Users can unbookmark resources.
-2.4.3. **Get Bookmarked Resources**: Users can retrieve a list of bookmarked resources.
+2.4.1. **Bookmark Resource**: Users can bookmark resources for future reference. <br>
+2.4.2. **Unbookmark Resource**: Users can unbookmark resources. <br>
+2.4.3. **Get Bookmarked Resources**: Users can retrieve a list of bookmarked resources. <br>
 
 #### 2.5. Authentication and Authorization
-2.5.1. **Robust Authentication**: The API uses a robust authentication system to ensure that only authorized users can access and modify resources.
-2.5.2. **Role-Based Access Control**: The API uses role-based access control to ensure that users can only perform actions that are authorized for their role.
+2.5.1. **Robust Authentication**: The API uses a robust authentication system to ensure that only authorized users can access and modify resources. <br>
+2.5.2. **Role-Based Access Control**: The API uses role-based access control to ensure that users can only perform actions that are authorized for their role. <br>
 
 #### 2.6. Notification System
-2.6.1. **Resource Creation Notifications**: Users can receive notifications when a new resource is created.
-2.6.2. **Learning Log Creation Notifications**: Users can receive notifications when a new learning log is created.
+2.6.1. **Resource Creation Notifications**: Users can receive notifications when a new resource is created. <br>
+2.6.2. **Learning Log Creation Notifications**: Users can receive notifications when a new learning log is created. <br>
 2.6.3. **Bookmarking Notifications**: Users can receive notifications when a resource is bookmarked or unbookmarked.
 
 #### 2.7. Filtering and Ordering
-2.7.1. **Filtering**: The API supports filtering for list API views, allowing users to retrieve resources based on specific criteria, such as resource type, status, or tags.
+2.7.1. **Filtering**: The API supports filtering for list API views, allowing users to retrieve resources based on specific criteria, such as resource type, status, or tags. <br>
 2.7.2. **Ordering**: The API supports ordering for list API views, allowing users to retrieve resources in a specific order, such as alphabetical or chronological.
 
 #### 2.8. Pagination
@@ -135,7 +135,7 @@ The project should now be running at `http://127.0.0.1:8000/`
 
 ### 4.0. API Endpoints
 
-- The API endpoints are documented using Swagger UI, which provides an interactive and easily accessible way to explore the available endpoints. You can access the Swagger UI documentation at http://localhost:8000/.
+- The API endpoints are documented using Swagger UI, which provides an interactive and easily accessible way to explore the available endpoints. You can access the Swagger UI documentation at https://devlinus.pythonanywhere.com/.
 
 
 ### 5.0. Error Handling
