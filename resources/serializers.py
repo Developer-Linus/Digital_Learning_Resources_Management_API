@@ -117,7 +117,6 @@ class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookmark
         fields = ['id', 'owner', 'resource', 'created_at']
-        read_only_fields = ['id', 'created_at']
     
     # check that a user cannot bookmark same resource more than once
     def validate(self, attrs):

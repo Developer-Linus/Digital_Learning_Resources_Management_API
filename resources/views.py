@@ -22,9 +22,9 @@ class CategoryListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.
     serializer_class = serializers.CategorySerializer
     
 # view for deleting a category
-class CategoryDeleteAPIView(OwnerQuerySetMixin,CustomDeleteResponseMixin, generics.DestroyAPIView):
+class CategoryDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer = serializers.CategorySerializer
+    serializer_class = serializers.CategorySerializer
     
 # View for Listing Resources
 class ResourceListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):

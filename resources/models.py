@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
 # Category model
 class Category(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='category')
-    name = models.CharField(max_length=30, null=False, blank=False, default='Uncategorized')
+    name = models.CharField(max_length=30, null=False, blank=False, default='Uncategorized', unique=True)
     description=models.TextField(null=True, blank=True)
     
     def __str__(self):
@@ -15,7 +16,7 @@ class Category(models.Model):
 # Resource model
 class Resource(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='resources')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='resources', default="General", null=False, blank=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='resources', null=False, blank=False)
     resource_name = models.CharField(max_length=255, null=False, blank=False)
     resource_author = models.CharField(max_length=200, null=False, blank=False)
     resource_url = models.URLField(max_length=300, null=False, blank=True)
@@ -47,6 +48,13 @@ class ResourceStatus(models.Model):
     is_completed = models.BooleanField(default=False)
     date_completed = models.DateField(null=True, blank=True)
     is_important = models.BooleanField(default=False)
+    
+    def save(self, *args, **kwargs):
+        if self.is_completed and not self.date_completed:
+            self.date_completed = timezone.now().date()
+        elif not self.is_completed and self.date_completed:
+            self.date_completed = None
+        super().save(*args, **kwargs)
     
 # Bookmark Model
 class Bookmark(models.Model):
