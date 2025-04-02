@@ -156,6 +156,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_THROTTLE_CLASSES': [
+       'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '1000/day'
+    }
    
 }
 
@@ -188,3 +194,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('GMAIL_ACCOUNT')
 EMAIL_HOST_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
+
+# Security Settings

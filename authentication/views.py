@@ -41,7 +41,7 @@ class RegisterView(generics.GenericAPIView):
             absurl = 'http://' + current_site + relativeLink + '?token=' + str(token)
 
             # Create the email body with the verification link
-            email_body = 'Hi,' + user.email +'Use the link below to verify your email\n' + absurl
+            email_body = f'Hi, {user.email}. Use the link below to verify your email' + '\n' + absurl
             # Create a dictionary with email data
             data = {'email_body': email_body, 'to_email': user.email, 'email_subject': 'Verify Your Email'}
 
