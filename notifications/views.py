@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from.models import Notification
 from .serializers import NotificationSerializer
 from rest_framework.response import Response
@@ -8,6 +8,9 @@ class NotificationListAPIView(generics.ListAPIView):
     
     serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['verb', 'target']
+    ordering_fields = ['verb', 'target', 'timestamp']
     
     def get_queryset(self):
         return Notification.objects.filter(recipient=self.request.user)

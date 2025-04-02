@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, filters
 from . import serializers
 from rest_framework.response import Response
 
@@ -20,6 +20,9 @@ class CategoryCreateAPIView(CreateResponseMixin, OwnerCreateMixin, generics.Crea
 class CategoryListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.CategorySerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name']
+    ordering_fields = ['name', 'description']
     
 # view for deleting a category
 class CategoryDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, generics.DestroyAPIView):
@@ -30,6 +33,9 @@ class CategoryDeleteAPIView(OwnerQuerySetMixin, CustomDeleteResponseMixin, gener
 class ResourceListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.ResourceSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['resource_name', 'resource_author']
+    ordering_fields = ['publication_date', 'created_at']
     
 # View for creating a resource
 class ResourceCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.CreateAPIView):
@@ -60,6 +66,9 @@ class LearningLogCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.C
 class LearningLogListAPIView(OwnerQuerySetMixin,CustomListResponseMixin, generics.ListAPIView):
     serializer_class = serializers.LearningLogSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['resource', 'notes']
+    ordering_fields = ['review', 'created_at']
 
 # View to reterive a learning log
 class LearningLogDetailAPIView(OwnerCreateMixin, OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
@@ -85,6 +94,9 @@ class ResourceStatusCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generic
 class ResourceStatusListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):
     serializer_class = serializers.ResourceStatusSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['resource', 'in_progress', 'is_completed', 'date_completed']
+    ordering_fields = ['in_progress', 'is_completed', 'date_completed']
 
 # View for Retrieving a resource status
 class ResourceStatusDetailAPiView(OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
@@ -110,6 +122,9 @@ class BookmarkCreateAPIView(OwnerCreateMixin, CreateResponseMixin, generics.Crea
 class BookmarkListAPIView(OwnerQuerySetMixin, CustomListResponseMixin, generics.ListAPIView):
     serializer_class = serializers.BookmarkSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['resource']
+    ordering_fields = ['resource', 'created_at']
 
 # View for retrieving a specific bookmark
 class BookmarkDetailAPIView(OwnerQuerySetMixin, CustomRetrieveResponseMixin, generics.RetrieveAPIView):
