@@ -1,8 +1,6 @@
 from rest_framework import status, permissions, generics, views
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from .serializers import UserRegistrationSerializer, LoginSerializer, LogoutSerializer, EmailVerificationSerializer
-from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from .utils import Util
@@ -41,7 +39,7 @@ class RegisterView(generics.GenericAPIView):
             absurl = 'http://' + current_site + relativeLink + '?token=' + str(token)
 
             # Create the email body with the verification link
-            email_body = f'Hi, {user.email}. Use the link below to verify your email' + '\n' + absurl
+            email_body = f'Hi, {user.username}. Please use the link below to verify your account.' + '\n' + absurl + '\n' + '\n' + 'Thank you for registering with us.'
             # Create a dictionary with email data
             data = {'email_body': email_body, 'to_email': user.email, 'email_subject': 'Verify Your Email'}
 

@@ -11,10 +11,10 @@ User = get_user_model()
 # User registration serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    confirm_password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     class Meta:
         model = User
-        fields = ['email', 'password', 'password2']
+        fields = ['username', 'email', 'password', 'confirm_password']
         
         extra_kwargs = {
             'password': {'write_only': True},
@@ -22,7 +22,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if len(attrs['password'])<8:
             return serializers.ValidationError('Password must be at least 8 characters.')
-        if attrs['password']!= attrs['password2']:
+        if attrs['password']!= attrs['confirm_password']:
             return serializers.ValidationError('Password fields did not match.')
         return attrs
     def create(self, validated_data):

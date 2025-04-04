@@ -7,10 +7,12 @@ from django.core.validators import validate_email
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, superuser=False):
+    def create_user(self, username, email, password=None, superuser=False):
         # create and return a normal user
         if not email:
             raise ValueError('Email is required.')
+        if not username.strip():
+            raise ValueError('Username must be provided.')
         try:
             validate_email(email)  # Check if the email format is valid
         except ValidationError:
@@ -18,7 +20,7 @@ class CustomUserManager(BaseUserManager):
         
         
         email = self.normalize_email(email)
-        user = self.model(email=email)
+        user = self.model(username=username, email=email)
         user.set_password(password)
         
         if superuser: # If it's a superuser set special flags before saving in database
@@ -32,8 +34,8 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         
         return user
-    def create_superuser(self, email, password):
-        return self.create_user(email, password, superuser=True)
+    def create_superuser(self, username, email, password):
+        return self.create_user(username, email, password, superuser=True)
     
 # Create custom user model
 class CustomUser(AbstractBaseUser, PermissionsMixin): 
@@ -42,6 +44,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('admin', 'Admin'),
         ('user', 'User'),
     ]
+    username = models.CharField(unique=True, max_length=255)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     is_verified = models.BooleanField(default=False)
@@ -54,7 +57,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
     
     USERNAME_FIELD = 'email' # Authentication by email instead of django default username
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
     
     def __str__(self):
         return self.email

@@ -1,7 +1,6 @@
 from rest_framework import generics, permissions, filters
 from rest_framework.pagination import PageNumberPagination
 from . import serializers
-from rest_framework.response import Response
 
 # Custom mixins
 from .mixins import (OwnerCreateMixin,
