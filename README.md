@@ -2,16 +2,16 @@
 ===========================================================
 
 ### Table of Contents
-1. [Overview](#overview)
+1. [Overview](#Overview)
 2. [Features](#Features)
 3. [Getting Started](#getting-started)
 4. [API Endpoints](#api-endpoints)
 5. [Error Handling](#error-handling)
 6. [Security Considerations](#security-considerations)
 
-### 1.0. Overview
+### Overview
  The Digital Learning Resources Management API is designed to simplify the process of organizing and retrieving digital learning resources. It addresses the common problem of losing track of valuable resources, allowing users to store, manage, and access materials in a centralized database. The API enables users to add, update, retrieve, and delete resources, as well as track progress, bookmark favorite materials, and access a learning log. By providing a streamlined way to manage digital learning resources, this API aims to help users achieve their learning goals efficiently and effectively.
-### 2.0. Features
+### Features
 The Digital Learning Resources Management API is designed to provide a comprehensive platform for managing digital learning resources. The API supports a range of features that enable users to create, read, update, and delete resources, as well as track their learning progress and interact with the resources in a meaningful way.
 
 #### 2.1. Resource Management
@@ -51,7 +51,7 @@ The Digital Learning Resources Management API is designed to provide a comprehen
 #### 2.8. Pagination
 2.8.1. **Pagination**: The API supports pagination for list API views, allowing users to retrieve a limited number of resources at a time and navigate through the results.
 
-### 3.0. Getting Started
+### Getting Started
 
 This guide will help you set up and run the Django REST Framework (DRF) project locally using MySQL as the database.
 
@@ -133,12 +133,12 @@ The project should now be running at `http://127.0.0.1:8000/`
 - **Migrations not applied properly**
   - Try `python manage.py makemigrations` followed by `python manage.py migrate`.
 
-### 4.0. API Endpoints
+### API Endpoints
 
 - The API endpoints are documented using Swagger UI, which provides an interactive and easily accessible way to explore the available endpoints. You can access the Swagger UI documentation at https://devlinus.pythonanywhere.com/.
 
 
-### 5.0. Error Handling
+### Error Handling
 
 The API uses a custom error handling approach to provide informative error responses. The following error responses are used:
 
@@ -163,7 +163,7 @@ In general, the API returns error responses with a JSON object containing the fo
 
 The API uses standard HTTP status codes to indicate the outcome of a request, and the error responses are designed to be informative and helpful for debugging purposes. This allows developers to quickly identify and resolve issues, and ensures that the API is robust and reliable.
 
-### 6.0. Security Considerations
+### Security Considerations
 
 The Digital Learning Resources Management API is designed with security in mind, and there are several considerations and best practices that users should be aware of when using the API.
 
