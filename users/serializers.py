@@ -5,7 +5,7 @@ from .models import CustomUser, Profile
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'email']
+        fields = ['id', 'username', 'email']
         read_only_fields = ['email']
 
 #Serializer for the Profile Model

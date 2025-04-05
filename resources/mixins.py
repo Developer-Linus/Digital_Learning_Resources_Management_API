@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class BaseModelMixin:
-    #Base mixin to dynamically retrieve the model name from the serializer class.
+    # Base mixin to dynamically retrieve the model name from the serializer class.
     @property
     def model_name(self):
         if hasattr(self, 'serializer_class') and hasattr(self.serializer_class.Meta, 'model'):

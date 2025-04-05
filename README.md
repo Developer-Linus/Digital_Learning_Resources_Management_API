@@ -63,6 +63,28 @@ Ensure you have the following installed on your machine:
 - Virtualenv (optional but recommended)
 - Git
 
+**Important:** The project is currently configured for production use. To run the project locally, you will need to make some adjustments to the settings.
+
+1. **Set `DEBUG` to `True`**: In the `settings.py` file, set `DEBUG` to `True`. This will enable debug mode, which is necessary for local development.
+```python
+DEBUG = True
+```
+2. **Remove `ALLOWED_HOSTS` from the list> Leave it empty**: In the `settings.py` file, remove the `ALLOWED_HOSTS` setting. This setting is used to restrict access to the site in production, but it will prevent the site from running locally if not removed.
+```python
+ALLOWED_HOSTS = []
+```
+3. **Remove or comment out security settings**: The project includes security settings that are suitable for production environments. To run the project locally, you will need to remove or comment out these settings. Specifically, you may need to comment out settings such as:
+```python
+# SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_HSTS_SECONDS = 3600
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+```
+**Note:** These settings are important for production environments, so be sure to re-enable them when deploying the project to a production server.
+
 ### 3.1. Installation Steps
 
 #### 3.1.1. Clone the Repository
