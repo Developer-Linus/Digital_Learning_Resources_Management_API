@@ -15,7 +15,7 @@
 ### Overview
  The Digital Learning Resources Management API is designed to simplify the process of organizing and retrieving digital learning resources. It addresses the common problem of losing track of valuable resources, allowing users to store, manage, and access materials in a centralized database. The API enables users to add, update, retrieve, and delete resources, as well as track progress, bookmark favorite materials, and access a learning log. By providing a streamlined way to manage digital learning resources, this API aims to help users achieve their learning goals efficiently and effectively.
 ### Features
-The Digital Learning Resources Management API is designed to provide a comprehensive platform for managing digital learning resources. The API supports a range of features that enable users to create, read, update, and delete resources, as well as track their learning progress and interact with the resources in a meaningful way.
+The Digital Learning Resources Management API is designed to provide a comprehensive platform for managing digital learning resources. The API supports a range of features that enable users to create, read, update, and delete resources, as well as track their learning progress and interact with the resources in a meaningful way. The features of the project include:
 
 #### 2.1. Resource Management
 2.1.1 **Create Resource**: Users can create new resources, including text-based content, images, videos, and other file types. <br>
@@ -72,15 +72,15 @@ Ensure you have the following installed on your machine:
 
 **Important:** The project is currently configured for production use. To run the project locally, you will need to make some adjustments to the settings.
 
-1. **Set `DEBUG` to `True`**: In the `settings.py` file, set `DEBUG` to `True`. This will enable debug mode, which is necessary for local development.
+(a) **Set `DEBUG` to `True`**: In the `settings.py` file, set `DEBUG` to `True`. This will enable debug mode, which is necessary for local development.
 ```python
 DEBUG = True
 ```
-2. **Remove `ALLOWED_HOSTS` from the list> Leave it empty**: In the `settings.py` file, remove the `ALLOWED_HOSTS` setting. This setting is used to restrict access to the site in production, but it will prevent the site from running locally if not removed.
+(bP **Remove `ALLOWED_HOSTS` from the list> Leave it empty**: In the `settings.py` file, remove the `ALLOWED_HOSTS` setting. This setting is used to restrict access to the site in production, but it will prevent the site from running locally if not removed.
 ```python
 ALLOWED_HOSTS = []
 ```
-3. **Remove or comment out security settings**: The project includes security settings that are suitable for production environments. To run the project locally, you will need to remove or comment out these settings. Specifically, you may need to comment out settings such as:
+(c) **Remove or comment out security settings**: The project includes security settings that are suitable for production environments. To run the project locally, you will need to remove or comment out these settings. Specifically, you may need to comment out settings such as:
 ```python
 # SECURE_SSL_REDIRECT = True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -161,13 +161,6 @@ The project should now be running at `http://127.0.0.1:8000/`
   - Ensure MySQL server is running.
 - **Migrations not applied properly**
   - Try `python manage.py makemigrations` followed by `python manage.py migrate`.
-### Testing
-- Testing is an essential part of the development process, as it ensures that the project is working as expected and helps catch any bugs or errors.
-- Testing is the process of verifying that the project meets the required specifications and works as expected. It involves writing and running tests to ensure that the project's functionality is correct and reliable.
-- To run tests, follow these simple steps:
-(a) Open a terminal or command prompt and navigate to the project directory. <br>
-(b) Type `python manage.py test` and press Enter. <br>
-(c) The tests will run, and you will see the results in the terminal or command prompt. <br>
 
 ### API Endpoints
 
@@ -201,7 +194,7 @@ The API uses standard HTTP status codes to indicate the outcome of a request, an
 
 ### Security Considerations
 
-The Digital Learning Resources Management API is designed with security in mind, and there are several considerations and best practices that users should be aware of when using the API.
+The Digital Learning Resources Management API is designed with security in mind, and there are several considerations and best practices that users should be aware of when using the API. The security considerations implemented include:
 
 #### 6.1. Authentication and Authorization
 
