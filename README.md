@@ -4,10 +4,13 @@
 ### Table of Contents
 1. [Overview](#Overview)
 2. [Features](#Features)
-3. [Getting Started](#getting-started)
-4. [API Endpoints](#api-endpoints)
-5. [Error Handling](#error-handling)
-6. [Security Considerations](#security-considerations)
+3. [Technologies Stack](#technologies-stack)
+4. [Getting Started](#getting-started)
+5. [Testing](#testing)
+6. [API Endpoints](#api-endpoints)
+7. [Error Handling](#error-handling)
+8. [Security Considerations](#security-considerations)
+9. [Contribution](#contribution)
 
 ### Overview
  The Digital Learning Resources Management API is designed to simplify the process of organizing and retrieving digital learning resources. It addresses the common problem of losing track of valuable resources, allowing users to store, manage, and access materials in a centralized database. The API enables users to add, update, retrieve, and delete resources, as well as track progress, bookmark favorite materials, and access a learning log. By providing a streamlined way to manage digital learning resources, this API aims to help users achieve their learning goals efficiently and effectively.
@@ -50,6 +53,10 @@ The Digital Learning Resources Management API is designed to provide a comprehen
 
 #### 2.8. Pagination
 2.8.1. **Pagination**: The API supports pagination for list API views, allowing users to retrieve a limited number of resources at a time and navigate through the results.
+### Technologies Stack
+- Django
+- Django REST framework
+- MySQL
 
 ### Getting Started
 
@@ -154,6 +161,13 @@ The project should now be running at `http://127.0.0.1:8000/`
   - Ensure MySQL server is running.
 - **Migrations not applied properly**
   - Try `python manage.py makemigrations` followed by `python manage.py migrate`.
+### Testing
+- Testing is an essential part of the development process, as it ensures that the project is working as expected and helps catch any bugs or errors.
+- Testing is the process of verifying that the project meets the required specifications and works as expected. It involves writing and running tests to ensure that the project's functionality is correct and reliable.
+- To run tests, follow these simple steps:
+(a) Open a terminal or command prompt and navigate to the project directory. <br>
+(b) Type `python manage.py test` and press Enter. <br>
+(c) The tests will run, and you will see the results in the terminal or command prompt. <br>
 
 ### API Endpoints
 
@@ -214,3 +228,11 @@ The API is configured to run on a secure server with the following settings:
 * `SECURE_BROWSER_XSS_FILTER = True`: This setting enables the browser's XSS filter, which can help prevent XSS attacks.
 * `SESSION_COOKIE_SECURE = True`: This setting ensures that session cookies are transmitted over a secure connection.
 * `CSRF_COOKIE_SECURE = True`: This setting ensures that CSRF cookies are transmitted over a secure connection.
+
+### Contribution
+- We welcome contributions to our project! Whether you're a seasoned developer or just starting out, your help is valuable to us.
+- We welcome the following types of contributions:
+	- **Bug fixes**: Fixing bugs and errors in the code.
+	- **New features**: Adding new features to the project.
+	- **Documentation**: Improving the documentation and making it more accessible.
+	- **Testing**: Writing tests and improving the testing infrastructure.
