@@ -208,7 +208,7 @@ To prevent abuse and ensure fair usage, the API has a throttling limit of 1000 r
 
 #### 6.3. Data Encryption
 
-The API uses HTTPS to encrypt data in transit. This ensures that all communication between the client and server is secure and cannot be intercepted or tampered with.
+The API uses HTTPS to encrypt data in transit. This ensures that all communication between the client and server is secure and cannot be intercepted or tampered with. Only authorized personnel will get access.
 
 #### 6.4. Server Configuration
 
